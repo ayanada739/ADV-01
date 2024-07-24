@@ -36,5 +36,51 @@ namespace Assignment
                     break;
             }
         }
+
+
+
+
+        // Range<T> Class
+        public class Range<T> where T : IComparable<T>
+        {
+            public T Minimum { get; }
+            public T Maximum { get; }
+
+            public Range(T minimum, T maximum)
+            {
+                if (minimum.CompareTo(maximum) > 0)
+                {
+                    throw new ArgumentException("Minimum value cannot be greater than maximum value.");
+                }
+
+                Minimum = minimum;
+                Maximum = maximum;
+            }
+
+            public bool IsInRange(T value)
+            {
+                return value.CompareTo(Minimum) >= 0 && value.CompareTo(Maximum) <= 0;
+            }
+
+            public dynamic Length()
+            {
+                if (typeof(T) == typeof(int))
+                {
+                    return (int)(object)Maximum - (int)(object)Minimum;
+                }
+                else if (typeof(T) == typeof(double))
+                {
+                    return (double)(object)Maximum - (double)(object)Minimum;
+                }
+                else if (typeof(T) == typeof(decimal))
+                {
+                    return (decimal)(object)Maximum - (decimal)(object)Minimum;
+                }
+                else
+                {
+                    throw new NotSupportedException("Length calculation is not supported for the given type.");
+                }
+            }
+        }
     }
 }
